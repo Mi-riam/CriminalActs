@@ -1,16 +1,24 @@
 #include "Headers.h"
 #include <iostream>
+#include <fstream>
 
 vector<Act> acts;
 
+//mutating functions
 void add(Act& act)
 {
 	acts.push_back(act);
+	saveToFile();
 }
 
-void remove()
+void remove(int actIndex)
 {
-	acts.clear();
+	acts.erase(acts.begin() + actIndex);
+}
+
+void modify(Act& act, int actIndex)
+{
+	acts[actIndex] = act;
 }
 
 void addActData() {
@@ -71,38 +79,149 @@ void addActData() {
 	add(act);
 }
 
-void modifyAct() {
+void removeAct()
+{
 	int actNumber;
-	cout << "Podaj numer akta do modyfikacji";
+
+	cout << "\nPodaj numer akta do usuniecia" << endl;
 	cin >> actNumber;
 
+	auto actIndex = getActIndex(actNumber);
+
+	if (actIndex == -1)
+	{
+		cout << "\nNie ma w bazie akta z takim numerem. " << endl << endl;
+	}
+	else
+	{
+		remove(actIndex);
+	}
+}
+
+void modifyAct() {
+	int actNumber;
+	Act actToModify;
+
 	cout << "\nPodaj numer akta do modyfikacji" << endl;
-	auto actToModify = findActByNum(actNumber);
+	cin >> actNumber;
+
+	auto actIndex = getActIndex(actNumber);
+
+	if (actIndex == -1)
+	{
+		cout << "\nNie ma w bazie akta z takim numerem. " << endl << endl;
+	}
+	else
+	{
+		cout << "\nPodaj date wszczecia sprawy (dzien/miesiac/rok): " << endl;
+		cin >> actToModify.caseOpenedDate;
+		cout << "\nPodaj date zakonczenia sprawy - puste jesli sprawa w toku (dzien/miesiac/rok):  " << endl;
+		cin >> actToModify.caseEndDate;
+		cout << "\nPodaj imie i nazwisko oficera prowadzacego:" << endl;
+		cin >> actToModify.leadingOficer;
+		cout << "\nPodaj imie i nazwisko oskarzonego (jesli nie ma pozostawic puste):" << endl;
+		cin >> actToModify.accused;
+		cout << "\nPodaj imie i nazwisko poszkodowanego (puste jezeli nie dotyczy):" << endl;
+		cin >> actToModify.victim;
+		cout << "\nPodaj imie i nazwisko swiadka: " << endl;
+		cin >> actToModify.witness;
+
+		modify(actToModify, actIndex);
+	}
+}
+
+void filterActs()
+{
+	int givenFilterType;
+	cout << "\nWybierz po czym chcesz wyszukac/przefiltrowac akta:\n1 Po numerze\n2 Po typie\n" << endl;
+	cin >> givenFilterType;
+
+	if (givenFilterType == FilterType::Number)
+	{
+		int actNumber;
+		cout << "\nPodaj numer akta: " << endl;
+		cin >> actNumber;
+
+		auto result = filterActsByNumber(actNumber);
+		if (result.number == NULL)
+		{
+			cout << "\nBrak resultatow." << endl;
+		}
+		else
+		{
+			cout << result.number << endl;
+			cout << result.type << endl;
+			cout << result.caseOpenedDate << endl;
+			cout << result.caseEndDate << endl;
+			cout << result.leadingOficer << endl;
+			cout << result.accused << endl;
+			cout << result.victim << endl;
+			cout << result.witness << endl;
+		}
+	}
+	else if (givenFilterType == FilterType::Type)
+	{
+		int actType;
+		cout << "\nWybierz po jakim typie chcesz filtrowac:\n1 Wykroczenie drogowe\n2 Kradziez\n3 Wymuszenie\n4 Rozboj\n5 Zabojstwo\n";
+		cin >> actType;
+
+		auto filteredActs = filterActsByType(actType);
+		if (filteredActs.size() == 0)
+		{
+			cout << "\nBrak resultatow." << endl;
+		}
+		else
+		{
+			for (int i = 0; i < filteredActs.size(); i++) {
+				auto act = filteredActs[i];
+				cout << endl;
+				cout << act.number << endl;
+				cout << act.type << endl;
+				cout << act.caseOpenedDate << endl;
+				cout << act.caseEndDate << endl;
+				cout << act.leadingOficer << endl;
+				cout << act.accused << endl;
+				cout << act.victim << endl;
+				cout << act.witness << endl << endl;
+			}
+		}
+	}
 
 
-	cout << "\nPodaj date wszczecia sprawy (dzien/miesiac/rok): " << endl;
-	cin >> actToModify.caseOpenedDate;
-	cout << "\nPodaj date zakonczenia sprawy - puste jesli sprawa w toku (dzien/miesiac/rok):  " << endl;
-	cin >> actToModify.caseEndDate;
-	cout << "\nPodaj imie i nazwisko oficera prowadzacego:" << endl;
-	cin >> actToModify.leadingOficer;
-	cout << "\nPodaj imie i nazwisko oskarzonego (jesli nie ma pozostawic puste):" << endl;
-	cin >> actToModify.accused;
-	cout << "\nPodaj imie i nazwisko poszkodowanego (puste jezeli nie dotyczy):" << endl;
-	cin >> actToModify.victim;
-	cout << "\nPodaj imie i nazwisko swiadka: " << endl;
-	cin >> actToModify.witness;
-
-	modify(actToModify);
 }
 
 void printActs() {
 	for (int i = 0; i < acts.size(); i++) {
-		cout << acts[i].leadingOficer;
+		auto act = acts[i];
+		cout << endl;
+		cout << act.number << endl;
+		cout << act.type << endl;
+		cout << act.caseOpenedDate << endl;
+		cout << act.caseEndDate << endl;
+		cout << act.leadingOficer << endl;
+		cout << act.accused << endl;
+		cout << act.victim << endl;
+		cout << act.witness << endl << endl;
 	}
 }
+//
+//void setActsData()
+//{
+//
+//}
 
 //OperationOnVector
+int getActIndex(int& number) {
+	int index = -1;
+	for (int i = 0; i < acts.size(); i++) {
+		if (acts[i].number == number) {
+			index = i;
+		}
+	}
+	return  index;
+}
+
+
 Act findActByNum(int& number) {
 	Act foundedAct;
 	for (int i = 0; i < acts.size(); i++) {
@@ -113,7 +232,7 @@ Act findActByNum(int& number) {
 	return  foundedAct;
 }
 
-vector<Act> filterActsByType(ActType& actType) {
+vector<Act> filterActsByType(int actType) {
 	vector<Act>  filteredActs;
 
 	for (int i = 0; i < acts.size(); i++) {
@@ -124,13 +243,53 @@ vector<Act> filterActsByType(ActType& actType) {
 	return filteredActs;
 }
 
-vector<Act> filterActsByNumber(int& actNumber) {
-	vector<Act>  filteredActs;
+Act filterActsByNumber(int& actNumber) {
+	Act  filteredAct;
 
 	for (int i = 0; i < acts.size(); i++) {
 		if (acts[i].number == actNumber) {
-			filteredActs.push_back(acts[i]);
+			filteredAct = acts[i];
 		}
 	}
-	return filteredActs;
+	return filteredAct;
+}
+
+void saveToFile()
+{
+	fstream outFile;
+	typename vector<Act>::size_type actsSize = acts.size();
+
+	outFile.open("../dataBase.bin", fstream::out | fstream::binary);
+
+	if (outFile.is_open())
+	{
+		outFile.write((char*)&actsSize, sizeof(actsSize));
+		outFile.write((char*)&acts[0], acts.size() * sizeof(Act));
+		outFile.close();
+	}
+	else
+	{
+		cout << "BLAD PODCZAS OTWARCIA PLIKU. " << endl;
+	}
+}
+
+void readFromFile()
+{
+	fstream outFile;
+	typename vector<Act>::size_type actsSize = acts.size();
+
+	outFile.open("../dataBase.bin", fstream::in | fstream::binary);
+
+	if (outFile.is_open())
+	{
+		outFile.read((char*)&actsSize, sizeof(actsSize));
+		acts.resize(actsSize);
+		outFile.read((char*)&acts[0], (acts.size() * sizeof(Act)));
+		outFile.close();
+	}
+	else
+	{
+		cout << " BLAD PODCZAS OTWARCIA DO OCZYTU Z PLIKU " << endl;
+
+	}
 }

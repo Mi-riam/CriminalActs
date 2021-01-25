@@ -1,9 +1,10 @@
 ﻿  Functions.cpp
-C:\Users\marra\Desktop\mjine projekten\projekt zaliczeniowy\CriminalActs\CriminalActs\Functions.cpp(100,20): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
-C:\Users\marra\Desktop\mjine projekten\projekt zaliczeniowy\CriminalActs\CriminalActs\Functions.cpp(108,20): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
-C:\Users\marra\Desktop\mjine projekten\projekt zaliczeniowy\CriminalActs\CriminalActs\Functions.cpp(119,20): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
-C:\Users\marra\Desktop\mjine projekten\projekt zaliczeniowy\CriminalActs\CriminalActs\Functions.cpp(130,20): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+C:\Users\marra\Desktop\mjine projekten\projekt zaliczeniowy\CriminalActs\CriminalActs\Functions.cpp(175,22): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+C:\Users\marra\Desktop\mjine projekten\projekt zaliczeniowy\CriminalActs\CriminalActs\Functions.cpp(194,20): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+C:\Users\marra\Desktop\mjine projekten\projekt zaliczeniowy\CriminalActs\CriminalActs\Functions.cpp(216,20): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+C:\Users\marra\Desktop\mjine projekten\projekt zaliczeniowy\CriminalActs\CriminalActs\Functions.cpp(227,20): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+C:\Users\marra\Desktop\mjine projekten\projekt zaliczeniowy\CriminalActs\CriminalActs\Functions.cpp(238,20): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
+C:\Users\marra\Desktop\mjine projekten\projekt zaliczeniowy\CriminalActs\CriminalActs\Functions.cpp(249,20): warning C4018: "<": niezgodność typu ze znakiem/bez znaku
   main.cpp
   Generowanie kodu...
-Functions.obj : error LNK2019: nierozpoznany symbol zewnętrzny "void __cdecl modify(struct Act &)" (?modify@@YAXAAUAct@@@Z) przywołany w funkcji "void __cdecl modifyAct(void)" (?modifyAct@@YAXXZ)
-C:\Users\marra\Desktop\mjine projekten\projekt zaliczeniowy\CriminalActs\Debug\CriminalActs.exe : fatal error LNK1120: liczba nierozpoznanych elementów zewnętrznych: 1
+  CriminalActs.vcxproj -> C:\Users\marra\Desktop\mjine projekten\projekt zaliczeniowy\CriminalActs\Debug\CriminalActs.exe

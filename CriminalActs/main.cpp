@@ -8,6 +8,8 @@ int main()
 {
 	int choice = 0;
 
+	readFromFile();
+
 	while (choice != 5)
 	{
 		cout << "\tARCHIWUM KRYMINALNE" << endl;
@@ -25,7 +27,7 @@ int main()
 
 		case 2:
 		{
-			remove();
+			removeAct();
 			break;
 
 		}
@@ -36,17 +38,15 @@ int main()
 			break;
 		}
 
-		/*
-
 		case 4:
 		{
-			WYSZUKAJ(archiwum[n]);
+			filterActs();
 			break;
 		}
 		case 5:
 		{
 			return 0;
-		}*/
+		}
 		case 6:
 		{
 			printActs();
